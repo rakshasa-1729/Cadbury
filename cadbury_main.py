@@ -8,34 +8,18 @@ from google.cloud import texttospeech
 from pydub import AudioSegment
 from pydub.playback import play
 
+from utils.config_utils import load_config
+from utils.whisper_utils import voice_to_text
+
 # Set up OpenAI API key and other necessary configurations
 openai.api_key = os.getenv("OPENAI_API_KEY")
+# Load config from file
+config = load_config("./config/config.yaml")
 
 
 def play_audio_response(audio_data):
     audio_segment = AudioSegment.from_file(io.BytesIO(audio_data), format="mp3")
     play(audio_segment)
-
-
-def voice_to_text(filename="audio.wav", seconds=10):
-    RATE = 16000
-    CHANNELS = 1
-    FORMAT = np.int16
-
-    print(f"Recording for {seconds} seconds...")
-
-    recorded_audio = sd.rec(
-        int(seconds * RATE), samplerate=RATE, channels=CHANNELS, dtype=FORMAT
-    )
-    sd.wait()  # Wait until the recording is finished
-
-    print("Recording finished")
-
-    wav_write(filename, RATE, recorded_audio)
-    with open(file=filename, mode="rb") as audiofile:
-        response = openai.Audio.transcribe("whisper-1", file=audiofile, stream=True)
-        text = response["text"]
-    return text
 
 
 def ask_gpt4(question):
@@ -49,7 +33,7 @@ def ask_gpt4(question):
         temperature=0.8,
     )
     answer = response.choices[0]["message"]["content"].strip()
-    print(answer)
+    print("cadbury: " + answer)
     return answer
 
 
@@ -74,19 +58,20 @@ def synthesize_text(
 
 
 def main():
-    # Convert voice input to text
-    text_input = voice_to_text()
+    while 1:
+        # Convert voice input to text
+        text_input = voice_to_text(config)
+        if "thank you" in text_input.lower():
+            break
+        # Get GPT-4's response
+        gpt4_response = ask_gpt4(text_input)
 
-    # Get GPT-4's response
-    gpt4_response = ask_gpt4(text_input)
-
-    # Convert GPT-4's response to speech using the specified voice parameters
-    audio_response = synthesize_text(gpt4_response)
-
-    # Play the generated audio response or save it as a file
-    play_audio_response(
-        audio_response
-    )  # Replace this with the actual function to play the audio
+        # Convert GPT-4's response to speech using the specified voice parameters
+        audio_response = synthesize_text(gpt4_response)
+        # Play the generated audio response or save it as a file
+        play_audio_response(
+            audio_response
+        )  # Replace this with the actual function to play the audio
 
 
 if __name__ == "__main__":

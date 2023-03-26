@@ -5,3 +5,6 @@ pyaudio >= 0.2.12
 sounddevice >= 0.4.6
 scipy >= 1.10.1
 audioread >= 3.0.0
+PyYAML >=6.0
+pvrecorder >= 1.1.1
+git+https://github.com/openai/whisper.git 
