@@ -1,5 +1,5 @@
 recording: "audio.wav"
 whisper:
   model: "base"
-  silence_duration: 3
+  silence_duration: 5
   frame_duration_ms: 50
