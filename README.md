@@ -13,8 +13,10 @@ This repository contains a Python script that demonstrates a simple voice assist
 
 1. Clone the repository:
 
-```git clone <https://github.com/rakshasa-1729/Cadbury.git>
-cd Cadbury```
+``` 
+git clone <https://github.com/rakshasa-1729/Cadbury.git>
+cd Cadbury 
+```
 
 2. Create a virtual environment and activate it:
 
@@ -29,14 +31,18 @@ cd Cadbury```
 
 3. Set up environment variables:
 
-```export OPENAI_API_KEY=<your-api-key>
-export GOOGLE_APPLICATION_CREDENTIALS=<path-to-your-json-key-file>```
+```
+export OPENAI_API_KEY=<your-api-key>
+export GOOGLE_APPLICATION_CREDENTIALS=<path-to-your-json-key-file>
+```
 
 ## Usage
 
 Run the script with:
 
-```python cadbury_main.py```
+```
+python cadbury_main.py
+```
 
 
 The script will prompt you to speak for a specified number of seconds, transcribe your speech to text using OpenAI's Whisper ASR API, and ask GPT-3.5 Turbo the transcribed question. It will then use Google Text-to-Speech API to convert the model's textual response to speech and play the generated audio response.
