@@ -4,18 +4,18 @@ SHELL=bash
 test: lint unittest
 	@echo -e "All tests complete $(OK_MSG)"
 
-fmt: env
+fmt:
 	@echo -n "==> Checking that code is autoformatted with black..."
 	@.venv/bin/python -m black  --exclude '(.venv|vendor)' .
 	@echo -e "$(OK_MSG)"
 
-lint: env
+lint:
 	@echo -n "==> Running flake8..."
 	@.venv/bin/flake8 --show-source --exclude=.venv
 	@echo -e "$(OK_MSG)"
 
 
-unittest: env
+unittest:
 	@echo "==> Running tests..."
 	@PYTHONPATH=. .venv/bin/pytest ./test --cov-report term-missing:skip-covered  --no-cov-on-fail -W ignore::DeprecationWarning -vv
 
