@@ -1,3 +1,4 @@
+import os
 import struct
 import wave
 import numpy as np
@@ -12,10 +13,8 @@ def rms(samples):
 
 def listen(config={}):
     recorder = PvRecorder(device_index=-1, frame_length=512, log_silence=False)
-    is_silent = False
     audio = []
     threshold = 100
-    sample_rate = 16000
     frame_duration_ms = 50
     silent_frames = 0
     try:
@@ -53,6 +52,13 @@ def listen(config={}):
 def voice_to_text(config={}):
     print(f"Cadbury: I am listening:")
     listen(config)
+        # Load the audio file
+    audio_file = AudioSegment.from_file(config["recording"])
+
+    # Check if the entire audio file is silent
+    if audio_file.dBFS <= -50:
+        return "SILENT"
+
     # Load whisper model and make it dynamic
     model = whisper.load_model(config["whisper"]["model"])
     # load the audio file
@@ -70,5 +76,8 @@ def voice_to_text(config={}):
 
     # print the recognized text
     print(result.text)
-
+    try:
+        os.remove(config["recording"])
+    except OSError as e:
+        print(f"Error: {e.filename} - {e.strerror}")
     return result.text

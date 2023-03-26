@@ -61,6 +61,8 @@ def main():
     while 1:
         # Convert voice input to text
         text_input = voice_to_text(config)
+        if "SILENT" == text_input:
+            continue
         if "thank you" in text_input.lower():
             break
         # Get GPT-4's response
