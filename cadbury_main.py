@@ -1,9 +1,6 @@
 import os
 import openai
-import sounddevice as sd
-from scipy.io.wavfile import write as wav_write
 import io
-import numpy as np
 from google.cloud import texttospeech
 from pydub import AudioSegment
 from pydub.playback import play

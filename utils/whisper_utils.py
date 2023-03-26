@@ -4,7 +4,7 @@ import wave
 import numpy as np
 import whisper
 from pvrecorder import PvRecorder
-from pydub import silence, AudioSegment
+from pydub import AudioSegment
 
 
 def rms(samples):
@@ -33,7 +33,7 @@ def listen(config={}):
                 silent_frames = 0
 
             if silent_frames >= num_silent_frames:
-                print(f"thinking ...")
+                print("thinking ...")
                 recorder.stop()
                 with wave.open(config["recording"], "w") as f:
                     f.setparams((1, 2, 16000, 512, "NONE", "NONE"))
@@ -50,9 +50,9 @@ def listen(config={}):
 
 
 def voice_to_text(config={}):
-    print(f"Cadbury: I am listening:")
+    print("Cadbury: I am listening:")
     listen(config)
-        # Load the audio file
+    # Load the audio file
     audio_file = AudioSegment.from_file(config["recording"])
 
     # Check if the entire audio file is silent
