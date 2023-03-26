@@ -24,7 +24,7 @@ env:
 	test -d .venv || python3 -m venv .venv
 	# build wheels when developing locally
 	test -z "$$CI" && .venv/bin/pip install -U pip wheel || true
-	brew install portaudio 
+	brew install portaudio ffmpeg
 	.venv/bin/pip install -r requirements.txt 
 	.venv/bin/pip install -r requirements-dev.txt 
 	touch .venv

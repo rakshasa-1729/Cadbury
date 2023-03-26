@@ -3,7 +3,6 @@ from unittest.mock import MagicMock, patch
 
 from attr import dataclass
 from cadbury_main import ask_gpt4, synthesize_text
-import openai
 
 
 @dataclass
