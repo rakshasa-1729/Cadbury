@@ -1,16 +1,35 @@
 import unittest
 from unittest.mock import MagicMock, patch
+
+from attr import dataclass
 from cadbury_main import ask_gpt4, synthesize_text
+import openai
+
+
+@dataclass
+class Response:
+    choices: dict
+
 
 class TestCadbury(unittest.TestCase):
     def test_ask_gpt4(self):
         with patch("openai.ChatCompletion.create") as mock_create:
-            mock_create.return_value = MagicMock(
-                choices=[MagicMock(message=MagicMock(content="Test response"))]
+            response = Response(
+                choices=[
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": "assistant",
+                            "content": "Paris",
+                        },
+                        "finish_reason": "stop",
+                    }
+                ]
             )
+            mock_create.return_value = response
 
             question = "What is the capital of France?"
-            expected_response = "Test response"
+            expected_response = "Paris"
             actual_response = ask_gpt4(question)
 
             self.assertEqual(actual_response, expected_response)

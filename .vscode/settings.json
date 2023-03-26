@@ -2,7 +2,7 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./Cadbury",
+        "./test",
         "-p",
         "test_*.py"
     ],
@@ -12,5 +12,5 @@
     "python.formatting.blackPath": "./Cadbury/.venv/bin/black",
     "[python]": {
         "editor.formatOnSave": true,
-       }
+    }
 }
