@@ -13,6 +13,13 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Load config from file
 config = load_config("./config/config.yaml")
 
+messages = [
+    {
+        "role": "system",
+        "content": "Act as a multi talented versatile assistant that is polite and brief in their responses",
+    }
+]
+
 
 def play_audio_response(audio_data):
     audio_segment = AudioSegment.from_file(io.BytesIO(audio_data), format="mp3")
@@ -20,7 +27,13 @@ def play_audio_response(audio_data):
 
 
 def ask_gpt4(question):
-    messages = [{"role": "user", "content": question}]
+    token_length = 0
+    for item in messages:
+        for k, v in item.items():
+            token_length = token_length + len(v)
+    if token_length > 4096:
+        messages.pop()
+    messages.extend([{"role": "user", "content": question}])
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=messages,
@@ -30,6 +43,7 @@ def ask_gpt4(question):
         temperature=0.8,
     )
     answer = response.choices[0]["message"]["content"].strip()
+    messages.extend([{"role": "assistant", "content": answer}])
     print("cadbury: " + answer)
     return answer
 
