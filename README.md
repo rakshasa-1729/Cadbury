@@ -1,4 +1,4 @@
-# Cadbury - Voice Assistant using OpenAI GPT-3.5 Turbo and Google Text-to-Speech
+# Cadbury - Voice Assistant using OpenAI GPT-4 and Google Text-to-Speech
 
 This repository contains a Python script that demonstrates a simple voice assistant using OpenAI's GPT-3.5 Turbo model for generating textual responses to spoken questions and Google Text-to-Speech API for converting the responses to speech.
 
