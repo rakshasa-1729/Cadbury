@@ -8,7 +8,7 @@
             "name": "Cadbury Debug",
             "type": "python",
             "request": "launch",
-            "program": "${cwd}/Cadbury/cadbury_main.py",
+            "program": "${cwd}/cadbury_main.py",
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {

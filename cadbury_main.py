@@ -35,7 +35,7 @@ def ask_gpt4(question):
         messages.pop()
     messages.extend([{"role": "user", "content": question}])
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=messages,
         max_tokens=100,
         n=1,
